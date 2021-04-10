@@ -33,16 +33,10 @@ static int cgt_time32_wrap(clockid_t clk, struct timespec *ts)
 
 static int cgt_init(clockid_t clk, struct timespec *ts)
 {
-	void *p = __vdsosym(VDSO_CGT_VER, VDSO_CGT_SYM);
-#ifdef VDSO_CGT32_SYM
-	if (!p) {
-		void *q = __vdsosym(VDSO_CGT32_VER, VDSO_CGT32_SYM);
-		if (q) {
-			a_cas_p(&vdso_func_32, 0, q);
-			p = cgt_time32_wrap;
-		}
-	}
-#endif
+	void *p;
+	__vdsosym(VDSO_CGT_VER, VDSO_CGT_SYM, &p);
+	__asm__ __volatile__ (ASM_ALIGN:::);
+
 	int (*f)(clockid_t, struct timespec *) =
 		(int (*)(clockid_t, struct timespec *))p;
 	a_cas_p(&vdso_func, (void *)cgt_init, p);
@@ -62,6 +56,7 @@ int __clock_gettime(clockid_t clk, struct timespec *ts)
 		(int (*)(clockid_t, struct timespec *))vdso_func;
 	if (f) {
 		r = f(clk, ts);
+		__asm__ __volatile__ (ASM_ALIGN:::);
 		if (!r) return r;
 		if (r == -EINVAL) return __syscall_ret(r);
 		/* Fall through on errors other than EINVAL. Some buggy

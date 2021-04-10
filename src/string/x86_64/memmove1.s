@@ -1,6 +1,6 @@
-.global memmove
-.type memmove,@function
-memmove:
+.global memmove1
+.type memmove1,@function
+memmove1:
 	mov %rdi,%rax
 	sub %rsi,%rax
 	cmp %rdx,%rax

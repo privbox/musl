@@ -115,6 +115,14 @@ obj/crt/rcrt1.o: $(srcdir)/ldso/dlstart.c
 
 obj/crt/Scrt1.o obj/crt/rcrt1.o: CFLAGS_ALL += -fPIC
 
+CFLAGS_BINDING := $(patsubst -mllvm -enable-priv-san, ,$(CFLAGS_ALL))
+CFLAGS_BINDING := $(patsubst -mllvm -enable-priv-san-branching, ,$(CFLAGS_BINDING))
+CFLAGS_BINDING += -falign-functions=32
+obj/src/exit/exit.o: CFLAGS_ALL := $(CFLAGS_BINDING)
+obj/src/sched/sched_getcpu.o: CFLAGS_ALL := $(CFLAGS_BINDING)
+obj/src/time/clock_gettime.o: CFLAGS_ALL := $(CFLAGS_BINDING)
+
+
 OPTIMIZE_SRCS = $(wildcard $(OPTIMIZE_GLOBS:%=$(srcdir)/src/%))
 $(OPTIMIZE_SRCS:$(srcdir)/%.c=obj/%.o) $(OPTIMIZE_SRCS:$(srcdir)/%.c=obj/%.lo): CFLAGS += -O3
 

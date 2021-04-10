@@ -1,3 +1,4 @@
+.p2align 5
 .global sigsetjmp
 .global __sigsetjmp
 .type sigsetjmp,@function
@@ -12,6 +13,9 @@ __sigsetjmp:
 	mov %rdi,%rbx
 
 	call setjmp@PLT
+	.p2align 4
+	nop
+	.p2align 4
 
 	pushq 64(%rbx)
 	mov %rbx,%rdi

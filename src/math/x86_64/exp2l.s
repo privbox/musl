@@ -22,6 +22,9 @@ expm1l:
 	ret
 1:	push %rax
 	call 1f
+	.p2align 4
+	nop
+	.p2align 4
 	pop %rax
 	fld1
 	fsubrp

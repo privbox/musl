@@ -379,6 +379,6 @@ hidden long __syscall_ret(unsigned long),
 
 hidden void __procfdname(char __buf[static 15+3*sizeof(int)], unsigned);
 
-hidden void *__vdsosym(const char *, const char *);
+hidden void __vdsosym(const char *, const char *, void **res);
 
 #endif

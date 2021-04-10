@@ -27,7 +27,10 @@ weak_alias(libc_exit_fini, __libc_exit_fini);
 _Noreturn void exit(int code)
 {
 	__funcs_on_exit();
+	__asm__ __volatile__ (ASM_ALIGN:::);
 	__libc_exit_fini();
+	__asm__ __volatile__ (ASM_ALIGN:::);
 	__stdio_exit();
+	__asm__ __volatile__ (ASM_ALIGN:::);
 	_Exit(code);
 }

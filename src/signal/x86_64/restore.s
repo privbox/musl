@@ -1,4 +1,6 @@
 	nop
+
+.p2align 5
 .global __restore_rt
 .hidden __restore_rt
 .type __restore_rt,@function

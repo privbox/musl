@@ -37,4 +37,14 @@
 
 #define __REDIR(x,y) __typeof__(x) x __asm__(#y)
 
+#if MUSL_P2ALIGN == 0
+#define ASM_ALIGN ".p2align 0"
+#endif
+#if MUSL_P2ALIGN == 4
+#define ASM_ALIGN	".p2align 4"
+#endif
+#if MUSL_P2ALIGN == 5
+#define ASM_ALIGN	".p2align 5"
+#endif
+
 #endif

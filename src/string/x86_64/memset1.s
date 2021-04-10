@@ -1,6 +1,6 @@
-.global memset
-.type memset,@function
-memset:
+.global memset1
+.type memset1,@function
+memset1:
 	movzbq %sil,%rax
 	mov $0x101010101010101,%r8
 	imul %r8,%rax
@@ -48,7 +48,8 @@ memset:
 	mov %rax,(-1-2-4-8-16-8)(%rdi,%rdx)
 
 1:	mov %rdi,%rax
-	ret
+	pop %rcx
+	jmp *%rcx
 
 2:	test $15,%edi
 	mov %rdi,%r8

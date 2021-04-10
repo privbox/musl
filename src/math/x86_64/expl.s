@@ -38,6 +38,9 @@ expl:
 	fstpt 16(%rsp)
 	fstpt 32(%rsp)
 	call exp2l@PLT
+	.p2align 4
+	nop
+	.p2align 4
 		# if 2^hi == inf return 2^hi
 	fld %st(0)
 	fstpt (%rsp)

@@ -1,4 +1,5 @@
 .text
+.p2align 5
 .global __clone
 .hidden __clone
 .type   __clone,@function
@@ -20,6 +21,9 @@ __clone:
 	xor %ebp,%ebp
 	pop %rdi
 	call *%r9
+	.p2align 4
+	nop
+	.p2align 4
 	mov %eax,%edi
 	xor %eax,%eax
 	mov $60,%al

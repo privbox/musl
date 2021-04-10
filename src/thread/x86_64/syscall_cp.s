@@ -24,7 +24,16 @@ __cp_begin:
 	mov 8(%rsp),%r8
 	mov 16(%rsp),%r9
 	mov %r11,8(%rsp)
+	mov %cs, %rcx
+	test $3, %cl
+	je __kerncall
 	syscall
+	jmp __cp_end
+__kerncall:
+	callq *kerncall_gate(%rip)
+	.p2align 4
+	nop
+	.p2align 4
 __cp_end:
 	ret
 __cp_cancel:
